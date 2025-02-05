@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_printing_paper" model="ir.ui.view">
+            <field name="name">printing.paper.size</field>
+            <field name="model">printing.paper</field>
+            <field name="arch" type="xml">
+                <form >
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="gsm"/>
+                            <field name="width"/>
+                            <field name="height"/>
+                            <field name="price_per_sheet"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_printing_paper_list" model="ir.ui.view">
+            <field name="name">printing.paper.size</field>
+            <field name="model">printing.paper</field>
+            <field name="arch" type="xml">
+                <tree>
+                            <field name="name"/>
+                            <field name="gsm"/>
+                            <field name="width"/>
+                            <field name="height"/>
+                            <field name="price_per_sheet"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="press_paper_action_window">
+            <field name="name">Paper window</field>
+            <field name="res_model">printing.paper</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Final Papers" id="press_paper_menu" parent="configuration_menus"
+                  action="press_paper_action_window" sequence="10"/>
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+/* Change the default primary color */
+.o_primary {
+    color: #0096ed !important; /* Replace with your desired color */
+}
+
+/* Change the background color of the navbar */
+.navbar.navbar-default {
+    background-color: #a14206 !important; /* Replace with your desired color */
+}
+
+/* Change the primary button color */
+.btn-primary {
+    background-color: #FF5733 !important; /* Replace with your desired color */
+    border-color: #0c0200 !important;
+}
+
+/* Add more custom styles as needed */

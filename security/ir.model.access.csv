@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_printing_order,access_printing_order,model_printing_order,base.group_user,1,1,1,1
+access_printing_bill_book_page,access_printing_bill_book_page,model_printing_bill_book_page,base.group_user,1,1,1,1
+access_receipt_final_size,access_receipt_final_size,model_receipt_final_size,base.group_user,1,1,1,1
+access_receipt_book_configuration,access_receipt_book_configuration,model_receipt_book_configuration,base.group_user,1,1,1,1
+access_receipt_base_paper,access_receipt_base_paper,model_receipt_base_paper,base.group_user,1,1,1,1
+access_base_paper_receipt,access_base_paper_receipt,model_base_paper_receipt,base.group_user,1,1,1,1
+access_printing_charge_pricing,access_printing_charge_pricing,model_printing_charge_pricing,base.group_user,1,1,1,1

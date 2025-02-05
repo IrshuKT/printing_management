@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_printing_size" model="ir.ui.view">
+            <field name="name">paper.size.form</field>
+            <field name="model">receipt.final.size</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+
+                            <field name="name"/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_paper_size_list" model="ir.ui.view">
+            <field name="name">paper.size.list</field>
+            <field name="model">receipt.final.size</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="paper_size_action_window">
+            <field name="name">Size window</field>
+            <field name="res_model">receipt.final.size</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <menuitem name="Final sizes" id="paper_size_menu" parent="configuration_main_menu"
+                  action="paper_size_action_window" sequence="20"/>
+
+    </data>
+</odoo>

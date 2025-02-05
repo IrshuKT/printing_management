@@ -1,0 +1,89 @@
+<odoo>
+    <!-- Custom Menu for Designers -->
+    <record id="receipt_book_configuration_tree_designer" model="ir.ui.view">
+        <field name="name">receipt.book.configuration.tree</field>
+        <field name="model">receipt.book.configuration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="final_size" string="Final Size"/>
+                <field name="number_of_books" string="Number of Books"/>
+                <field name="number_of_receipts" string="Receipts per Book"/>
+                <field name="order_status" string="Order Status"/>
+                <field name="design_status" string="Design Status"/>
+                <field name="design_start_date" string="Start Date"/>
+                <field name="design_end_date" string="End Date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="receipt_book_configuration_form_designer" model="ir.ui.view">
+        <field name="name">receipt.book.configuration.form.designer</field>
+        <field name="model">receipt.book.configuration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Requirements">
+                            <!-- Fields visible in the form view for designers -->
+                            <field name="sequence" readonly="1"/>
+                            <field name="partner_id" string="Customer" readonly="1"/>
+                            <field name="final_size" string="Final Size" readonly="1"/>
+                            <field name="number_of_books" string="Number of Books" readonly="1"/>
+                            <field name="number_of_receipts" string="Receipts per Book" readonly="1"/>
+                            <field name="order_status" string="Order Status" readonly="1"/>
+                        </group>
+                        <group string="Update Details">
+                            <field name="design_status" string="Design Status"/>
+                            <field name="design_start_date" string="Start Date"/>
+                            <field name="design_end_date" string="End Date"/>
+                            <!--                        <field name="description" string="Description"/>-->
+                        </group>
+                    </group>
+                     <footer>
+                        <button name="action_start_designing"
+                                string="Start Designing"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('design_status', 'in', ['ongoing', 'completed'])]}"/>
+                        <button name="action_mark_design_completed"
+                                string="Complete Design"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('design_status', '!=', 'ongoing')]}"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Graph View-->
+    <record id="view_designer_graph" model="ir.ui.view">
+        <field name="name">base.paper.configuration.tree</field>
+        <field name="model">receipt.book.configuration</field>
+        <field name="arch" type="xml">
+            <graph type="pie">
+                <field name="design_status"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_receipt_book_designer" model="ir.actions.act_window">
+        <field name="name">Design Works</field>
+        <field name="res_model">receipt.book.configuration</field>
+        <field name="view_mode">tree,form,graph</field>
+         <field name="domain">[('order_status', '!=', 'draft'),('assigned_designer_id', '=', uid)]</field>
+        <field name="view_ids" eval="[
+            (5,0),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('view_designer_graph')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('receipt_book_configuration_tree_designer')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('receipt_book_configuration_form_designer')}),
+     ]"/>
+    </record>
+
+    <!-- Add the Action to the Menu -->
+
+    <menuitem id="menu_designer_work_assigned" name="Multi Design Work" parent="menu_printing_root"
+              action="action_receipt_book_designer"
+              groups="group_press_designers" />
+</odoo>

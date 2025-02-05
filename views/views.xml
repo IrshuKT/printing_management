@@ -1,0 +1,85 @@
+<odoo>
+    <!-- Form View for Printing Order -->
+    <record id="view_printing_order_form" model="ir.ui.view">
+        <field name="name">printing.order.form</field>
+        <field name="model">printing.order</field>
+        <field name="arch" type="xml">
+            <form string="Printing Order">
+                <sheet>
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" states="draft"/>
+                        <button name="action_done" string="Mark as Done" type="object" states="confirmed"/>
+                        <button name="action_cancel" string="Cancel" type="object" states="draft,confirmed"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+                        <button name="generate_invoice" string="Generate Invoice" type="object"/>
+
+                    </header>
+                    <group>
+                        <group string="Customer Requirements">
+                            <field name="sequence"/>
+                            <field name="customer_id"/>
+                            <field name="order_date"/>
+                            <field name="due_date"/>
+                            <field name="out_product"/>
+                            <field name="total_count"/>
+                            <field name="final_size"/>
+                            <field name="base_paper"/>
+
+                        </group>
+                        <group string="Cost">
+
+                            <field name="designing_cost"/>
+                            <field name="printing_charge"/>
+                            <field name="material_cost"/>
+                            <field name="total_cost"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View for Printing Order -->
+    <record id="view_printing_order_tree" model="ir.ui.view">
+        <field name="name">printing.order.tree</field>
+        <field name="model">printing.order</field>
+        <field name="arch" type="xml">
+            <tree string="Printing Orders">
+                <field name="sequence"/>
+                <field name="customer_id"/>
+                <field name="order_date"/>
+
+                <field name="final_size"/>
+                <field name="total_count"/>
+                <field name="total_cost"/>
+                <field name="due_date"/>
+                <field name="state"/>
+                <!--                <field name="total_cost"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Printing Orders -->
+    <record id="action_printing_order" model="ir.actions.act_window">
+        <field name="name">Printing Orders</field>
+        <field name="res_model">printing.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Printing Order
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_printing_root" name="Printing Press" sequence="10"/>
+
+    <menuitem id="menu_printing_orders" name="Single Copy"
+              parent="menu_printing_root"
+              action="action_printing_order" sequence="3" groups="base.group_system"/>
+
+    <menuitem name="Configuration" id="configuration_main_menu" parent="menu_printing_root"
+              sequence="4" groups="base.group_system"/>
+
+
+</odoo>

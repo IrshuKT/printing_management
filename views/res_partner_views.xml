@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherited View for Res Partner -->
+        <record id="view_partner_form_inherited" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <page name="sales_purchases" position="inside">
+                    <field name="invoice_ids" widget="one2many_list" options="{'no_create': True}" />
+                </page>
+            </field>
+        </record>
+    </data>
+</odoo>

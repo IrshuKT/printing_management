@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.actions.act_window" id="better_receipt_configuration_action_window">
+        <field name="name">Order window</field>
+        <field name="res_model">receipt.book.configuration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_base_paper_configuration_tree"/>
+        <field name="context">{'limit': 10}</field>
+
+    </record>
+
+    <record id="action_printing_order" model="ir.actions.act_window">
+        <field name="name">Printing Orders</field>
+        <field name="res_model">printing.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_printing_order_tree"/>
+        <field name="context">{'limit': 10}</field>
+    </record>
+
+    <record id="dashboard_form_view" model="ir.ui.view">
+        <field name="name">Dashboard Form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <board style="1">
+                    <column>
+                        <action string="Receipt / Bill Book"
+                                name="%(press_management.better_receipt_configuration_action_window)d" />
+
+                        <action string="Notice"
+                                name="%(press_management.action_printing_order)d" />
+                    </column>
+                    <column>
+
+                    </column>
+
+                </board>
+            </form>
+        </field>
+    </record>
+    <record id="press_main_action" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="dashboard_form_view"/>
+
+
+    </record>
+
+    <menuitem name="Dashboard" action="press_main_action" sequence="1" id="press_main_dashboard"
+              parent="menu_printing_root" groups="base.group_system"/>
+</odoo>

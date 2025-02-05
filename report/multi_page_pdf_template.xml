@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_service_memo_report" model="ir.actions.report">
+        <field name="name">Service Memo</field>
+        <field name="model">receipt.book.configuration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">press_management.service_memo_report_template</field>
+        <field name="report_file">press_management.service_memo_report_template</field>
+        <field name="binding_model_id" ref="model_receipt_book_configuration"/>
+        <field name="binding_type">report</field>
+
+    </record>
+</odoo>

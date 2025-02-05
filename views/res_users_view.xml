@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extend the res.users form view to add the is_designer field -->
+    <record id="view_users_form_designer" model="ir.ui.view">
+        <field name="name">res.users.form.designer</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <!-- Add the is_designer field to the Preferences section -->
+            <xpath expr="//group[@name='preferences']" position="inside">
+                <field name="is_designer"/>
+            </xpath>
+            <xpath expr="//group[@name='preferences']" position="inside">
+                <field name="is_printing"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

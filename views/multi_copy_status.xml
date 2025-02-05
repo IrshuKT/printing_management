@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Status Fields
+        <record id="field_design_status" model="ir.model.fields">
+            <field name="name">design_status</field>
+            <field name="model_id" ref="model_receipt_book_configuration"/>
+            <field name="field_description">Design Status</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[('pending', 'Pending'), ('ongoing', 'Ongoing'), ('completed', 'Completed')]</field>
+        </record>
+
+        <record id="field_printing_status" model="ir.model.fields">
+            <field name="name">printing_status</field>
+            <field name="model_id" ref="model_receipt_book_configuration"/>
+            <field name="field_description">Printing Status</field>
+            <field name="ttype">selection</field>
+            <field name="selection">[('pending', 'Pending'), ('ongoing', 'Ongoing'), ('completed', 'Completed')]</field>
+        </record>
+             -->
+        <!-- Status Views -->
+        <record id="view_multicopy_status_form" model="ir.ui.view">
+            <field name="name">multicopy.status.form</field>
+            <field name="model">receipt.book.configuration</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Designing Status">
+                                <field name="design_status"/>
+                                <field name="design_start_date"/>
+                                <field name="design_end_date"/>
+                            </group>
+                            <group string="Printing Status">
+                                <field name="printing_status"/>
+                                <field name="printing_start_date"/>
+                                <field name="printing_end_date"/>
+                            </group>
+                            <group string="Binding Status">
+                                <!-- Binding and Serialization Fields -->
+                                <field name="binding_status"/>
+                                <field name="binding_start_date"/>
+                                <field name="binding_end_date"/>
+                            </group>
+                            <group string="Serialization Status">
+                                <field name="serialization_status"/>
+                                <field name="serialization_start_date"/>
+                                <field name="serialization_end_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_multicopy_status_tree" model="ir.ui.view">
+            <field name="name">multicopy.status.tree</field>
+            <field name="model">receipt.book.configuration</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" readonly="1"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="assigned_designer_id"/>
+                    <field name="design_status"/>
+                    <field name="printing_status"/>
+                    <field name="binding_status"/>
+                    <field name="serialization_status"/>
+                    <field name="order_status"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_multicopy_status">
+            <field name="name">Multicopy Status</field>
+            <field name="res_model">receipt.book.configuration</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[
+                (5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_multicopy_status_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_multicopy_status_form')}),
+            ]"/>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="menu_multicopy_status" name="Multicopy Status" parent="better_paper_configuration_menu"
+                  action="action_multicopy_status" sequence="20"/>
+    </data>
+</odoo>

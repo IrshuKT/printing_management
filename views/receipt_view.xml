@@ -1,0 +1,125 @@
+<odoo>
+    <data>
+        <record id="final_size_a10" model="receipt.final.size">
+            <field name="name">A10</field>
+            <field name="description">Description for A10 size</field>
+        </record>
+
+        <!-- Form view for Base Paper Receipt Mapping -->
+        <record id="view_base_paper_configuration_form" model="ir.ui.view">
+            <field name="name">receipt.book.form</field>
+            <field name="model">receipt.book.configuration</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <header>
+                            <field name="order_status" widget="statusbar"
+                                   statusbar_visible="draft,designing,printing,binding,serializing,ready"/>
+                            <button name="action_print_service_memo" string="Print Service Memo" type="object"
+                            class="btn-primary"/>
+                            <button name="action_generate_invoice" string="Generate Invoice" type="object"
+                                    attrs="{'invisible': [('order_status', '!=', 'ready')]}"/>
+                            <button name="action_assign_designer"
+                                    string="Assign Designer"
+                                    type="object"
+                                    class="btn-primary"
+                                    attrs="{'invisible':[('order_status', '!=', 'draft')]}"/>
+                        </header>
+                        <group>
+                            <group string="Customer requirements">
+                                <field name="sequence"/>
+                                <field name="partner_id" />
+                                <field name="partner_tags" invisible="1"/>
+                                <field name="selected_partner_tag"/>
+                                <field name="select_item"/>
+                                <field name="number_of_receipts"/>
+                                <field name="number_of_copies"/>
+                                <field name="number_of_books"/>
+                                <field name="final_size"/>
+                                <field name="total_receipts" readonly="1"/>
+                                <field name="base_paper_1" options="{'no_create': True}"/>
+<!--                                <field name="base_paper_1_sheets"/>-->
+                                <field name="base_paper_2" options="{'no_create': True}"/>
+<!--                                <field name="base_paper_2_sheets"/>-->
+                                <field name="base_paper_3" options="{'no_create': True}"
+                                       attrs="{'invisible': [('number_of_copies', 'not in', [3, 4])]}"/>
+<!--                                <field name="base_paper_3_sheets"-->
+<!--                                       attrs="{'invisible': [('number_of_copies', 'not in', [3, 4])]}"/>-->
+                                <field name="base_paper_4" options="{'no_create': True}"
+                                       attrs="{'invisible': [('number_of_copies', 'not in', 4)]}"/>
+<!--                                <field name="base_paper_4_sheets"-->
+<!--                                       attrs="{'invisible': [('number_of_copies', 'not in', 4)]}"/>-->
+                            </group>
+                            <group string="Cost">
+                                <field name="assigned_designer_id"/>
+                                <field name="assigned_printer_id"/>
+                                <field name="designing_cost"/>
+                                <field name="printing_charge"/>
+                                <field name="binding_charge"/>
+                                <field name="numbering_charge"/>
+                                <field name="total_cost"/>
+                                <field name="net_charge"/>
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Tree view for Base Paper Receipt Mapping -->
+        <record id="view_base_paper_configuration_tree" model="ir.ui.view">
+            <field name="name">base.paper.configuration.tree</field>
+            <field name="model">receipt.book.configuration</field>
+            <field name="arch" type="xml">
+                <tree limit="80">
+                    <field name="sequence"/>
+                    <field name="partner_id"/>
+                    <field name="selected_partner_tag"/>
+                    <field name="select_item"/>
+                    <field name="order_date"/>
+                    <field name="number_of_copies"/>
+                    <field name="final_size"/>
+                    <field name="number_of_books"/>
+                    <field name="total_receipts"/>
+                    <field name="net_charge"/>
+                    <field name="assigned_designer_id"/>
+                    <field name="due_date"/>
+                    <field name="order_status"/>
+                </tree>
+            </field>
+        </record>
+        <!--Graph View-->
+        <record id="view_base_paper_configuration_graph" model="ir.ui.view">
+            <field name="name">base.paper.configuration.tree</field>
+            <field name="model">receipt.book.configuration</field>
+            <field name="arch" type="xml">
+                <graph>
+                    <field name="order_status"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+
+        <record model="ir.actions.act_window" id="better_receipt_configuration_action_window">
+            <field name="name">Order window</field>
+            <field name="res_model">receipt.book.configuration</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_ids" eval="[
+            (5,0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_base_paper_configuration_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_base_paper_configuration_form')}),
+            (0,0,{'view_mode':'graph','view_id': ref('view_base_paper_configuration_graph')}),
+     ]"/>
+
+        </record>
+
+        <menuitem name="Multi Copy" id="better_paper_configuration_menu" parent="menu_printing_root" sequence="2"
+                  groups="base.group_system"/>
+        <menuitem name="Multi Copy" id="better_multipaper_menu" parent="better_paper_configuration_menu" sequence="10"
+                  action="better_receipt_configuration_action_window" groups="base.group_system"/>
+
+
+    </data>
+</odoo>

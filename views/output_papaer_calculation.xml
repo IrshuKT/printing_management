@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    conversion xml-->
+    <data>
+        <record id="view_printing_size_calculation" model="ir.ui.view">
+            <field name="name">paper.size.calculation</field>
+            <field name="model">receipt.base.paper</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Paper Calculation">
+                                <field name="base_paper_id"/>
+                                <field name="final_size"/>
+                                <field name="receipts_per_sheet"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_paper_calculation_list" model="ir.ui.view">
+            <field name="name">paper.calculation.list</field>
+            <field name="model">receipt.base.paper</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="base_paper_id"/>
+                    <field name="final_size"/>
+                    <field name="receipts_per_sheet"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="paper_calculation_action_window">
+            <field name="name">Calculation window</field>
+            <field name="res_model">receipt.base.paper</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Conversion" id="paper_calculation_menu" parent="configuration_main_menu"
+                  action="paper_calculation_action_window" sequence="30"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/press_management/static/src/css/custom_style.css"/>
+        </xpath>
+    </template>
+
+    <template id="service_memo_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+
+                    <div class="page">
+                        <h2>Service Memo</h2>
+                        <h3>Bill Book / Receipt</h3>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Memo No</th>
+                                <td>
+                                    <span t-field="doc.sequence"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Customer</th>
+                                <td>
+                                    <span t-field="doc.partner_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Order Date</th>
+                                <td>
+                                    <span t-field="doc.order_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Copies</th>
+                                <td>
+                                    <span t-field="doc.number_of_copies"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Receipts per Book</th>
+                                <td>
+                                    <span t-field="doc.number_of_receipts"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Number of Books</th>
+                                <td>
+                                    <span t-field="doc.number_of_books"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Receipt Size</th>
+                                <td>
+                                    <span t-field="doc.final_size"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>First Paper and Count </th>
+                                <td>
+                                    <span t-field="doc.base_paper_1"/>
+                                    <p>Count:
+                                    <span t-field="doc.base_paper_1_sheets"/> </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Second Paper and Count</th>
+                                <td>
+                                    <p>Count:
+                                    <span t-field="doc.base_paper_2"/></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Third Paper and Count</th>
+                                <td>
+                                    <p>Count:
+                                    <span t-field="doc.base_paper_3"/></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Fourth Paper and Count</th>
+                                <td>
+                                    <p>Count:
+                                    <span t-field="doc.base_paper_4"/></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Total Amount</th>
+                                <td>
+                                    <span t-field="doc.net_charge"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Delivery Date</th>
+                                <td>
+                                    <span t-field="doc.due_date"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,47 @@
+<odoo>
+    <!-- Form View for Printing Order -->
+    <record id="view_printing_cost_form" model="ir.ui.view">
+        <field name="name">printing.cost.form</field>
+        <field name="model">printing.cost.range</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="min_quantity"/>
+                        <field name="max_quantity"/>
+                        <field name="binding_cost"/>
+                        <field name="serial_number_cost"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View for Printing Order -->
+    <record id="view_printing_cost_tree" model="ir.ui.view">
+        <field name="name">printing.cost.tree</field>
+        <field name="model">printing.cost.range</field>
+        <field name="arch" type="xml">
+            <tree>
+                 <field name="name"/>
+                        <field name="min_quantity"/>
+                        <field name="max_quantity"/>
+                        <field name="binding_cost"/>
+                        <field name="serial_number_cost"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Printing Orders -->
+    <record id="action_cost_order" model="ir.actions.act_window">
+        <field name="name">Printing cost</field>
+        <field name="res_model">printing.cost.range</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem name="Cost" id="paper_cost_menu" parent="configuration_main_menu"
+                  action="action_cost_order" sequence="20"/>
+
+</odoo>

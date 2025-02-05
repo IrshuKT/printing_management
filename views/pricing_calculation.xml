@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_calculation_form" model="ir.ui.view">
+            <field name="name">price.calculation.form</field>
+            <field name="model">printing.charge.pricing</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="min_receipts"/>
+                            <field name="max_receipts"/>
+                            <field name="printing_charge"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_calculation_list" model="ir.ui.view">
+            <field name="name">price.calculation.list</field>
+            <field name="model">printing.charge.pricing</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="min_receipts"/>
+                    <field name="max_receipts"/>
+                    <field name="printing_charge"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="pricing_calculation_action_window">
+            <field name="name">Calculation window</field>
+            <field name="res_model">printing.charge.pricing</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem name="Pricing" id="price_calculation_menu" parent="configuration_main_menu"
+                  action="pricing_calculation_action_window" sequence="20"/>
+
+    </data>
+</odoo>

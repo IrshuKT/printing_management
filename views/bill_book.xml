@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="printing_bill_book_tree" model="ir.ui.view">
+            <field name="name">bill.book.tree</field>
+            <field name="model">printing.bill.book.page</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_id"/>
+                    <field name="order_date"/>
+                    <field name="receipt_size_id"/>
+                    <field name="num_copies"/>
+                    <field name="number_of_books"/>
+                    <field name="receipts_per_book"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_printing_order_line_form" model="ir.ui.view">
+            <field name="name">printing.order.line.form</field>
+            <field name="model">printing.bill.book.page</field>
+            <field name="arch" type="xml">
+                <form string="Printing Order Line">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" states="draft"/>
+                        <button name="action_done" string="Mark as Done" type="object" states="confirmed"/>
+                        <button name="action_cancel" string="Cancel" type="object" states="draft,confirmed"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+                        <button name="generate_invoice" string="Generate Invoice" type="object"
+                                attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Customer &amp; Order Details">
+                                <field name="customer_id"/>
+                                <field name="order_date"/>
+
+                                <field name="num_copies"/>
+                                <field name="number_of_books"/>
+                                <field name="receipts_per_book"/>
+
+                            </group>
+
+                            <group string="Charges &amp; Costs">
+                                <field name="due_date"/>
+                                <field name="designing_charge"/>
+                                <field name="printing_charge"/>
+                                <field name="binding_charge"/>
+                                <field name="numbering_charge"/>
+                                <field name="material_cost"/>
+                                <field name="total_cost"/>
+                            </group>
+                            <group string="Paper size">
+                                <field name="receipt_size_id"/>
+                                <field name="first_paper"/>
+                                <field name="second_paper"/>
+                                <field name="third_paper" attrs="{'invisible': [('num_copies', 'not in', [3, 4])]}"/>
+                                <field name="fourth_paper" attrs="{'invisible': [('num_copies', 'not in', [4])]}"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="bill_book_action_window">
+            <field name="name">Bill book window</field>
+            <field name="res_model">printing.bill.book.page</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Bill Book Order
+            </p>
+        </field>
+        </record>
+        <menuitem name="Bill Book" id="bill_book" parent="menu_printing_root"
+                  action="bill_book_action_window" sequence="30"/>
+
+
+    </data>
+</odoo>

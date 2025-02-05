@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_receipt_book_configuration_printer_tree" model="ir.ui.view">
+        <field name="name">receipt.book.configuration.printer.tree</field>
+        <field name="model">receipt.book.configuration</field>
+        <field name="arch" type="xml">
+            <tree string="Printer Jobs">
+                <field name="sequence"/>
+                <field name="partner_id" readonly="1"/>
+                <field name="final_size" readonly="1"/>
+                <field name="number_of_copies" readonly="1"/>
+                <field name="number_of_books" readonly="1"/>
+                <field name="number_of_receipts" readonly="1"/>
+                <field name="base_paper_1" readonly="1"/>
+                <field name="base_paper_2" readonly="1"/>
+                <field name="base_paper_3" readonly="1"/>
+                <field name="base_paper_4" readonly="1"/>
+                <field name="printing_status" readonly="0"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="view_receipt_book_configuration_printer_form" model="ir.ui.view">
+        <field name="name">receipt.book.configuration.printer.form</field>
+        <field name="model">receipt.book.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Printer Jobs">
+                <sheet>
+                    <header>
+
+                        <button name="action_start_binding" string="Start Binding" type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('binding_status', 'in', ['in_progress', 'completed'])]}"/>
+                        <button name="action_mark_binding_completed" string="Complete Binding" type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('binding_status', '!=', 'in_progress')]}"/>
+                        <button name="action_start_serialization" string="Start Serialization" type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('serialization_status', 'in', ['in_progress', 'completed'])]}"/>
+                        <button name="action_mark_serialization_completed" string="Complete Serialization"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('serialization_status', '!=', 'in_progress')]}"/>
+
+                    </header>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="final_size" readonly="1"/>
+                            <field name="number_of_copies" readonly="1"/>
+                            <field name="number_of_books" readonly="1"/>
+                            <field name="number_of_receipts" readonly="1"/>
+                            <field name="base_paper_1" readonly="1"/>
+                            <field name="base_paper_2" readonly="1"/>
+                            <field name="base_paper_3" readonly="1"/>
+                            <field name="base_paper_4" readonly="1"/>
+                        </group>
+                        <group string="Printing Status">
+                            <field name="printing_status"/>
+                            <field name="printing_start_date"/>
+                            <field name="printing_end_date"/>
+                        </group>
+                        <group string="Binding Status">
+                            <!-- Binding and Serialization Fields -->
+                            <field name="binding_status"/>
+                            <field name="binding_start_date"/>
+                            <field name="binding_end_date"/>
+                        </group>
+                        <group string="Serialization Status">
+                            <field name="serialization_status"/>
+                            <field name="serialization_start_date"/>
+                            <field name="serialization_end_date"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <!-- Start Printing Button, visible only when printing_status is not 'ongoing' or 'completed' -->
+                        <button name="action_start_printing"
+                                string="Start Printing"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('printing_status', 'in', ['ongoing', 'completed'])]}"/>
+
+                        <!-- Complete Printing Button, visible only when printing_status is 'ongoing' -->
+                        <button name="action_mark_printing_completed"
+                                string="Complete Printing"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('printing_status', '!=', 'ongoing')]}"/>
+
+
+                    </footer>
+                </sheet>
+            </form>
+
+        </field>
+
+    </record>
+    <record id="action_receipt_book_configuration_printer" model="ir.actions.act_window">
+        <field name="name">Printer Jobs</field>
+        <field name="res_model">receipt.book.configuration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('order_status', '=', 'printing'),('assigned_printer_id', '=', uid)]</field>
+        <field name="view_ids" eval="[
+            (5,0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_receipt_book_configuration_printer_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_receipt_book_configuration_printer_form')}),
+
+     ]"/>
+        <!--
+        <field name="view_id" ref="view_receipt_book_configuration_printer_tree"/>
+         <field name="search_view_id" ref="view_receipt_book_configuration_printer_search"/>-->
+    </record>
+    <menuitem id="menu_receipt_book_configuration_printer"
+              name="Printer Jobs"
+              action="action_receipt_book_configuration_printer"
+              parent="menu_printing_root"
+              groups="group_press_print"/>
+
+
+</odoo>
